@@ -1,66 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://cdn.devdojo.com/assets/svg/laravel-vue-logo.svg" width="300" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://github.com/laravel/vue-starter-kit/actions"><img src="https://github.com/laravel/vue-starter-kit/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+<img src="https://cdn.devdojo.com/images/december2024/screenshot.png" />
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Introduction
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Welcome to the Laravel **Vue Starter Kit**, a starter kit built using [Laravel](https://laravel.com), [Vue](https://vuejs.org), [Inertia](https://inertiajs.com), and [Tailwind CSS](https://tailwindcss.com).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+To install the starter kit, run the following command:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. git clone https://github.com/laravel/vue-starter-kit
+2. cd vue-starter-kit
+3. git checkout develop
+4. copy .env.example .env
+5. install dependencies `npm install && composer install`
+6. run migrations `php artisan migrate`
+7. add encryption key `php artisan key:generate`
+8. start the asset watcher `npm run dev`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Visit the URL for your app and you're good to go!
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Features
 
-## Laravel Sponsors
+This Starter Kit includes the following features:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **User Authentication** (login, register, password reset, email verify, and password confirmation)
+- **Dashboard Page** (Auth Protected User Dashboard Page)
+- **Settings Page** (Profile Update/Delete, Password Update, Appearance)
 
-### Premium Partners
+## Front-end App Structure
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+The majority of the front-end code is located in the `resources/js` folder. We follow Vue.js best practices and conventions for organizing these files and folders. The structure follows these naming conventions:
 
-## Contributing
+**Folders**: Use kebab-case
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+resources/js/
+├── components/     # Reusable Vue components
+├── composables/    # Vue composables/hooks
+├── layouts/        # Application layouts
+├── lib/           # Utility functions and configurations
+├── pages/         # Page components
+└── types/         # Typescript definitions and interfaces
+```
 
-## Code of Conduct
+**Components**: Use PascalCase for component files
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+components/
+└── AppearanceTabs.vue
+└── NavigationBar.vue
+```
 
-## Security Vulnerabilities
+**Composables/Utilities**: Use camelCase for utility files and composables
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+composables/
+└── useAuth.ts
+└── useSettings.ts
+```
 
-## License
+This structure aligns more with the default Vue conventions.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Icons
+
+This starter kit leverages the [Lucide Vue Library](https://lucide.dev/guide/packages/lucide-vue-next), which provides you with a collection of over 1000 icons. View the full list of icons [here](https://lucide.dev/icons).
+
+Here's a quick example of using an icon in one of your Vue Components:
+
+```
+<script setup lang="ts">
+    ...
+    import { Rocket } from 'lucide-vue-next';
+    ...
+</script>
+
+<template>
+    <p class="flex items-center space-x-2">
+        <Rocket />
+        <span class="text-lg font-medium">Vue Starter Kit</span>
+    </p>
+</template>
+```
