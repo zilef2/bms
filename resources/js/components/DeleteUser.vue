@@ -81,7 +81,7 @@ const closeModal = () => {
 
             <div className="relative text-red-600 dark:text-red-100 ml-3">
                 <p className="font-medium leading-none mb-1 text-sm">Warning</p>
-                <p className="leading-none text-xs">Please proceed with caution, this cannot be undone</p>
+                <p className="leading-none text-xs">Please proceed with caution, this cannot be undone.</p>
             </div>
         </div>
     </div>
