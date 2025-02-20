@@ -1,90 +1,25 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://cdn.devdojo.com/assets/svg/laravel-vue-logo.svg" width="300" alt="Laravel Logo"></a></p>
-
-<p align="center">
-<a href="https://github.com/laravel/vue-starter-kit/actions"><img src="https://github.com/laravel/vue-starter-kit/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-<img src="https://cdn.devdojo.com/images/december2024/screenshot.png" />
+# Laravel + Vue Starter Kit
 
 ## Introduction
 
-Welcome to the Laravel **Vue Starter Kit**, a starter kit built using [Laravel](https://laravel.com), [Vue](https://vuejs.org), [Inertia](https://inertiajs.com), and [Tailwind CSS](https://tailwindcss.com).
+Our Vue starter kit provides a robust, modern starting point for building Laravel applications with a Vue frontend using [Inertia](https://inertiajs.com).
 
-## Installation
+Inertia allows you to build modern, single-page Vue applications using classic server-side routing and controllers. This lets you enjoy the frontend power of Vue combined with the incredible backend productivity of Laravel and lightning-fast Vite compilation.
 
-To install the starter kit, run the following command:
+This Vue starter kit utilizes Vue 3 and the Composition API, TypeScript, Tailwind, and the [shadcn-vue](https://www.shadcn-vue.com) component library.
 
-1. git clone https://github.com/laravel/vue-starter-kit
-2. cd vue-starter-kit
-3. git checkout develop
-4. copy .env.example .env
-5. install dependencies `npm install && composer install`
-6. run migrations `php artisan migrate`
-7. add encryption key `php artisan key:generate`
-8. start the asset watcher `npm run dev`
+## Official Documentation
 
-Visit the URL for your app and you're good to go!
+Documentation for all Laravel starter kits can be found on the [Laravel website](https://laravel.com/docs/starter-kits).
 
-## Features
+## Contributing
 
-This Starter Kit includes the following features:
+Thank you for considering contributing to our starter kit! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-- **User Authentication** (login, register, password reset, email verify, and password confirmation)
-- **Dashboard Page** (Auth Protected User Dashboard Page)
-- **Settings Page** (Profile Update/Delete, Password Update, Appearance)
+## Code of Conduct
 
-## Front-end App Structure
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-The majority of the front-end code is located in the `resources/js` folder. We follow Vue.js best practices and conventions for organizing these files and folders. The structure follows these naming conventions:
+## License
 
-**Folders**: Use kebab-case
-
-```
-resources/js/
-├── components/     # Reusable Vue components
-├── composables/    # Vue composables/hooks
-├── layouts/        # Application layouts
-├── lib/           # Utility functions and configurations
-├── pages/         # Page components
-└── types/         # Typescript definitions and interfaces
-```
-
-**Components**: Use PascalCase for component files
-
-```
-components/
-└── AppearanceTabs.vue
-└── NavigationBar.vue
-```
-
-**Composables/Utilities**: Use camelCase for utility files and composables
-
-```
-composables/
-└── useAuth.ts
-└── useSettings.ts
-```
-
-This structure aligns more with the default Vue conventions.
-
-## Icons
-
-This starter kit leverages the [Lucide Vue Library](https://lucide.dev/guide/packages/lucide-vue-next), which provides you with a collection of over 1000 icons. View the full list of icons [here](https://lucide.dev/icons).
-
-Here's a quick example of using an icon in one of your Vue Components:
-
-```
-<script setup lang="ts">
-    ...
-    import { Rocket } from 'lucide-vue-next';
-    ...
-</script>
-
-<template>
-    <p class="flex items-center space-x-2">
-        <Rocket />
-        <span class="text-lg font-medium">Vue Starter Kit</span>
-    </p>
-</template>
-```
+The Laravel + Vue starter kit is open-sourced software licensed under the MIT license.
