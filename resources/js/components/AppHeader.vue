@@ -161,8 +161,8 @@ const rightNavItems: NavItem[] = [
                     <DropdownMenu>
                         <DropdownMenuTrigger :as-child="true">
                             <Button variant="ghost" size="icon" class="relative h-9 w-auto rounded-md px-1">
-                                <span
-                                    ><img v-if="auth.user?.avatar" :src="auth.user.avatar" :alt="auth.user.name" class="rounded-full" />
+                                <span>
+                                    <img v-if="auth.user?.avatar" :src="auth.user.avatar" :alt="auth.user.name" class="h-8 w-8 rounded-lg" />
                                     <span
                                         v-else
                                         class="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10 text-sm font-medium text-primary"
