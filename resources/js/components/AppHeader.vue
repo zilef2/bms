@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import UserMenuContent from '@/components/UserMenuContent.vue';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -161,15 +162,12 @@ const rightNavItems: NavItem[] = [
                     <DropdownMenu>
                         <DropdownMenuTrigger :as-child="true">
                             <Button variant="ghost" size="icon" class="relative h-9 w-auto rounded-md px-1">
-                                <span>
-                                    <img v-if="auth.user?.avatar" :src="auth.user.avatar" :alt="auth.user.name" class="h-8 w-8 rounded-lg" />
-                                    <span
-                                        v-else
-                                        class="flex h-7 w-7 items-center justify-center rounded-md bg-primary/10 text-sm font-medium text-primary"
-                                    >
+                                <Avatar className="h-7 w-7 overflow-hidden rounded-lg">
+                                    <AvatarImage :src="auth.user.avatar" :alt="auth.user.name" />
+                                    <AvatarFallback class="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                         {{ getInitials(auth.user?.name) }}
-                                    </span>
-                                </span>
+                                    </AvatarFallback>
+                                </Avatar>
                                 <ChevronDown class="ml-auto mr-1 size-4" />
                             </Button>
                         </DropdownMenuTrigger>
