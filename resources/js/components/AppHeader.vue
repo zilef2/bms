@@ -17,7 +17,7 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpenText, ChevronDown, FolderGit2, LayoutGrid, Menu, Search } from 'lucide-vue-next';
+import { BookOpen, Folder, ChevronDown, LayoutGrid, Menu, Search } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Props {
@@ -36,7 +36,7 @@ const isCurrentRoute = (url: string) => {
 };
 
 const activeItemStyles = computed(
-    () => (url: string) => (isCurrentRoute(url) ? 'bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100' : ''),
+    () => (url: string) => (isCurrentRoute(url) ? 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100' : ''),
 );
 
 const mainNavItems: NavItem[] = [
@@ -51,12 +51,12 @@ const rightNavItems: NavItem[] = [
     {
         title: 'Repository',
         url: 'https://github.com/laravel/vue-starter-kit',
-        icon: FolderGit2,
+        icon: Folder,
     },
     {
         title: 'Documentation',
         url: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpenText,
+        icon: BookOpen,
     },
 ];
 </script>
@@ -134,8 +134,8 @@ const rightNavItems: NavItem[] = [
 
                 <div class="ml-auto flex items-center space-x-2">
                     <div class="relative flex items-center space-x-1">
-                        <Button variant="ghost" size="icon" class="h-9 w-9 cursor-pointer">
-                            <Search class="h-5 w-5" />
+                        <Button variant="ghost" size="icon" class="h-9 w-9 cursor-pointer group">
+                            <Search class="size-5 opacity-80 group-hover:opacity-100" />
                         </Button>
 
                         <div class="hidden space-x-1 lg:flex">
@@ -143,10 +143,10 @@ const rightNavItems: NavItem[] = [
                                 <TooltipProvider :delay-duration="0">
                                     <Tooltip>
                                         <TooltipTrigger>
-                                            <Button variant="ghost" size="icon" as-child class="h-9 w-9 cursor-pointer">
+                                            <Button variant="ghost" size="icon" as-child class="h-9 w-9 group cursor-pointer">
                                                 <a :href="item.url" target="_blank" rel="noopener noreferrer">
                                                     <span class="sr-only">{{ item.title }}</span>
-                                                    <component :is="item.icon" class="h-5 w-5" />
+                                                    <component :is="item.icon" class="size-5 opacity-80 group-hover:opacity-100" />
                                                 </a>
                                             </Button>
                                         </TooltipTrigger>
@@ -161,8 +161,8 @@ const rightNavItems: NavItem[] = [
 
                     <DropdownMenu>
                         <DropdownMenuTrigger :as-child="true">
-                            <Button variant="ghost" size="icon" class="relative h-9 w-auto rounded-md px-1">
-                                <Avatar className="h-7 w-7 overflow-hidden rounded-lg">
+                            <Button variant="ghost" size="icon" class="relative size-10 w-auto rounded-full p-1">
+                                <Avatar className="size-8 overflow-hidden rounded-full">
                                     <AvatarImage :src="auth.user.avatar" :alt="auth.user.name" />
                                     <AvatarFallback class="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                                         {{ getInitials(auth.user?.name) }}

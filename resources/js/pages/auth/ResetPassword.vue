@@ -31,8 +31,8 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthLayout title="Reset Password" description="Please enter your new password below">
-        <Head title="Reset Password" />
+    <AuthLayout title="Reset password" description="Please enter your new password below">
+        <Head title="Reset password" />
 
         <form @submit.prevent="submit">
             <div class="grid gap-6">
@@ -52,8 +52,9 @@ const submit = () => {
                         v-model="form.password"
                         class="mt-1 block w-full"
                         autofocus
+                        placeholder="Password"
                     />
-                    <InputError :message="form.errors.password" class="mt-2" />
+                    <InputError :message="form.errors.password" />
                 </div>
 
                 <div class="grid gap-2">
@@ -65,13 +66,14 @@ const submit = () => {
                         autocomplete="new-password"
                         v-model="form.password_confirmation"
                         class="mt-1 block w-full"
+                        placeholder="Confirm password"
                     />
-                    <InputError :message="form.errors.password_confirmation" class="mt-2" />
+                    <InputError :message="form.errors.password_confirmation" />
                 </div>
 
-                <Button type="submit" class="w-full" :disabled="form.processing">
+                <Button type="submit" class="mt-4 w-full" :disabled="form.processing">
                     <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    Reset Password
+                    Reset password
                 </Button>
             </div>
         </form>

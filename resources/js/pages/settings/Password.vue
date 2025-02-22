@@ -20,7 +20,7 @@ defineProps<Props>();
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Password Settings',
+        title: 'Password settings',
         href: '/settings/password',
     },
 ];
@@ -59,7 +59,7 @@ const updatePassword = () => {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Profile Settings" />
+        <Head title="Profile settings" />
 
         <SettingsLayout>
             <div class="space-y-6">
@@ -75,6 +75,7 @@ const updatePassword = () => {
                             type="password"
                             class="mt-1 block w-full"
                             autocomplete="current-password"
+                            placeholder="Current password"
                         />
                         <InputError :message="form.errors.current_password" />
                     </div>
@@ -88,6 +89,7 @@ const updatePassword = () => {
                             type="password"
                             class="mt-1 block w-full"
                             autocomplete="new-password"
+                            placeholder="New password"
                         />
                         <InputError :message="form.errors.password" />
                     </div>
@@ -100,6 +102,7 @@ const updatePassword = () => {
                             type="password"
                             class="mt-1 block w-full"
                             autocomplete="new-password"
+                            placeholder="Confirm password"
                         />
                         <InputError :message="form.errors.password_confirmation" />
                     </div>
@@ -114,7 +117,7 @@ const updatePassword = () => {
                             leave="transition ease-in-out"
                             leave-to="opacity-0"
                         >
-                            <p class="text-sm text-gray-600">Saved.</p>
+                            <p class="text-sm text-neutral-600">Saved</p>
                         </TransitionRoot>
                     </div>
                 </form>

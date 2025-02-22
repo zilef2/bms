@@ -17,8 +17,8 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthLayout>
-        <Head title="Email Verification" />
+    <AuthLayout title="Verify email" description="Please verify your email address by clicking on the link we just emailed to you.">
+        <Head title="Email verification" />
 
         <div class="mb-4 text-sm text-gray-600">
             Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you
@@ -29,22 +29,20 @@ const submit = () => {
             A new verification link has been sent to the email address you provided during registration
         </div>
 
-        <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-between">
-                <Button :disabled="form.processing">
-                    <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    Resend Verification Email
-                </Button>
+        <form @submit.prevent="submit" class="space-y-6 text-center">
+            <Button :disabled="form.processing">
+                <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
+                Resend verification email
+            </Button>
 
-                <TextLink
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Log Out
-                </TextLink>
-            </div>
+            <TextLink
+                :href="route('logout')"
+                method="post"
+                as="button"
+                class="mx-auto block text-sm"
+            >
+                Log Out
+            </TextLink>
         </form>
     </AuthLayout>
 </template>
