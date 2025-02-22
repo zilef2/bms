@@ -17,7 +17,7 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, ChevronDown, LayoutGrid, Menu, Search } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Props {
@@ -161,14 +161,13 @@ const rightNavItems: NavItem[] = [
 
                     <DropdownMenu>
                         <DropdownMenuTrigger :as-child="true">
-                            <Button variant="ghost" size="icon" class="relative size-10 w-auto rounded-full p-1">
-                                <Avatar className="size-8 overflow-hidden rounded-full">
+                            <Button variant="ghost" size="icon" class="relative size-10 w-auto rounded-full p-1 focus-within:ring-primary focus-within:ring-2">
+                                <Avatar class="size-8 overflow-hidden rounded-full">
                                     <AvatarImage :src="auth.user.avatar" :alt="auth.user.name" />
-                                    <AvatarFallback class="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                    <AvatarFallback class="rounded-lg bg-neutral-200 text-black font-semibold dark:bg-neutral-700 dark:text-white">
                                         {{ getInitials(auth.user?.name) }}
                                     </AvatarFallback>
                                 </Avatar>
-                                <ChevronDown class="ml-auto mr-1 size-4" />
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" class="w-56">
