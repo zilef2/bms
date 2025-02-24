@@ -25,7 +25,7 @@ const submit = () => {
     <AuthLayout title="Forgot password" description="Enter your email to receive a password reset link">
         <Head title="Forgot password" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+        <div v-if="status" class="mb-4 text-center text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
@@ -45,7 +45,7 @@ const submit = () => {
                 </div>
             </form>
 
-            <div class="text-muted-foreground space-x-1 text-center text-sm">
+            <div class="space-x-1 text-center text-sm text-muted-foreground">
                 <span>Or, return to</span>
                 <TextLink :href="route('login')">log in</TextLink>
             </div>

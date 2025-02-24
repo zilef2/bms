@@ -42,7 +42,15 @@ const submit = () => {
 
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input id="password" type="password" required tabindex="3" autocomplete="new-password" v-model="form.password" placeholder="Password" />
+                    <Input
+                        id="password"
+                        type="password"
+                        required
+                        tabindex="3"
+                        autocomplete="new-password"
+                        v-model="form.password"
+                        placeholder="Password"
+                    />
                     <InputError :message="form.errors.password" />
                 </div>
 
@@ -66,7 +74,7 @@ const submit = () => {
                 </Button>
             </div>
 
-            <div class="text-muted-foreground text-center text-sm">
+            <div class="text-center text-sm text-muted-foreground">
                 Already have an account?
                 <TextLink :href="route('login')" class="underline underline-offset-4" tabindex="6">Log in</TextLink>
             </div>

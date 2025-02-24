@@ -57,7 +57,15 @@ const submit = () => {
 
                     <div class="grid gap-2">
                         <Label for="email">Email address</Label>
-                        <Input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autocomplete="username" placeholder="Email address" />
+                        <Input
+                            id="email"
+                            type="email"
+                            class="mt-1 block w-full"
+                            v-model="form.email"
+                            required
+                            autocomplete="username"
+                            placeholder="Email address"
+                        />
                         <InputError class="mt-2" :message="form.errors.email" />
                     </div>
 
@@ -68,7 +76,7 @@ const submit = () => {
                                 :href="route('verification.send')"
                                 method="post"
                                 as="button"
-                                class="rounded-md text-sm text-neutral-600 underline hover:text-neutral-900 focus:ring-2 focus:ring-offset-2 focus:outline-hidden"
+                                class="focus:outline-hidden rounded-md text-sm text-neutral-600 underline hover:text-neutral-900 focus:ring-2 focus:ring-offset-2"
                             >
                                 Click here to re-send the verification email.
                             </Link>

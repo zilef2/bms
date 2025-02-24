@@ -10,7 +10,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    showEmail: false
+    showEmail: false,
 });
 
 const { getInitials } = useInitials();
