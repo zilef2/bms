@@ -45,7 +45,11 @@ const closeModal = () => {
 <template>
     <div class="space-y-6">
         <HeadingSmall title="Delete account" description="Delete your account and all of its resources" />
-        <div className="border border-red-100 dark:border-red-950 p-3 rounded-lg flex items-center bg-red-50 dark:bg-red-700/10">
+        <div class="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10">
+            <div class="relative space-y-0.5 text-red-600 dark:text-red-100">
+                <p class="font-medium">Warning</p>
+                <p class="text-sm">Please proceed with caution, this cannot be undone.</p>
+            </div>
             <Dialog>
                 <DialogTrigger as-child>
                     <Button variant="destructive">Delete account</Button>
@@ -78,11 +82,6 @@ const closeModal = () => {
                     </form>
                 </DialogContent>
             </Dialog>
-
-            <div className="relative text-red-600 dark:text-red-100 ml-3">
-                <p className="font-medium leading-none mb-1 text-sm">Warning</p>
-                <p className="leading-none text-xs">Please proceed with caution, this cannot be undone.</p>
-            </div>
         </div>
     </div>
 </template>
