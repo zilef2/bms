@@ -20,17 +20,12 @@ const submit = () => {
     <AuthLayout title="Verify email" description="Please verify your email address by clicking on the link we just emailed to you.">
         <Head title="Email verification" />
 
-        <div class="mb-4 text-center text-sm text-gray-600">
-            Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you
-            didn't receive the email, we will gladly send you another
-        </div>
-
         <div v-if="status === 'verification-link-sent'" class="mb-4 text-center text-sm font-medium text-green-600">
-            A new verification link has been sent to the email address you provided during registration
+            A new verification link has been sent to the email address you provided during registration.
         </div>
 
         <form @submit.prevent="submit" class="space-y-6 text-center">
-            <Button :disabled="form.processing">
+            <Button :disabled="form.processing" variant="secondary">
                 <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
                 Resend verification email
             </Button>
@@ -41,7 +36,7 @@ const submit = () => {
                 as="button"
                 class="mx-auto block text-sm"
             >
-                Log Out
+                Log out
             </TextLink>
         </form>
     </AuthLayout>
