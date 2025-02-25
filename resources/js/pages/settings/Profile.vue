@@ -72,7 +72,7 @@ const submit = () => {
                     </div>
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
-                        <p class="mt-2 text-sm text-muted-foreground">
+                        <p class="-mt-4 text-sm text-muted-foreground">
                             Your email address is unverified.
                             <Link
                                 :href="route('verification.send')"
@@ -80,7 +80,7 @@ const submit = () => {
                                 as="button"
                                 class="hover:decoration-current! text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out dark:decoration-neutral-500"
                             >
-                                Click here to re-send the verification email.
+                                Click here to resend the verification email.
                             </Link>
                         </p>
 
