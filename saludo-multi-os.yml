@@ -27,4 +27,4 @@ jobs:
       - name: Imprimir Saludo en ${{ matrix.os }} # El nombre del paso también puede usar la variable
         # El comando de shell que se ejecutará
         # Usamos la variable de la matriz para saber en qué SO estamos corriendo
-        run: echo "¡Hola Mundo desde GitHub Actions2 corriendo en ${{ matrix.os }}!"
+        run: echo "¡Hola Mundo desde GitHub Actions3 corriendo en ${{ matrix.os }}!"
