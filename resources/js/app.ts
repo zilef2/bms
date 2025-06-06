@@ -1,11 +1,14 @@
 import '../css/app.css';
 
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, usePage } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
+import "vue-select/dist/vue-select.css";
+import vSelect from 'vue-select'
+
 
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
@@ -20,15 +23,31 @@ declare module 'vite/client' {
     }
 }
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Zilef';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
-    setup({ el, App, props, plugin }) {
+    title: (title : string) : string => `${title} - ${appName}`,
+    resolve: (name : string) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
+    setup({ el, App, props, plugin }): void {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .component("v-select", vSelect)
             .use(ZiggyVue)
+            .mixin({
+                methods: {
+                    can: function (permissions: any) {
+                        const allPermissions = this.$page.props.auth.can;
+                        let hasPermission = false;
+                        permissions.forEach(function (item: any):void {
+                            if (allPermissions[item]) hasPermission = true;
+                        });
+                        return hasPermission;
+                    },
+                    lang: function (): string {
+                        return usePage()?.props?.language?.original ?? 'es';
+                    }
+                },
+            })
             .mount(el);
     },
     progress: {
