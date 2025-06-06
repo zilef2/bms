@@ -31,6 +31,7 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "concurrently": "^9.0.1",
+        "floating-vue": "^2.0.0-beta.14",
         "laravel-vite-plugin": "^1.0",
         "lucide": "^0.468.0",
         "lucide-vue-next": "^0.468.0",
@@ -41,6 +42,7 @@
         "typescript": "^5.2.2",
         "vite": "^6.2.0",
         "vue": "^3.5.13",
+        "vue-select": "^4.0.0-beta.6",
         "ziggy-js": "^2.4.2"
     },
     "optionalDependencies": {
