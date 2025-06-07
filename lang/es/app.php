@@ -1,9 +1,16 @@
 <?php
 
 return [
+    'initial' => [
+		'Platform' => 'Dashboard',
+		'title' => 'Titulo',
+		'Log_in_to_your_account' => 'Ingrese a su cuenta',
+		'Enter_your_email_and_password_below_to_log_in' => 'Ingrese su email y contraseña a continuacion para ingresar',
+	],
     'label' => [
 		'codigo_oferta' => 'Código oferta',
 		'error_creating' => 'Error inesperado creando :name.',
+		'description' => 'Descripción',
 		'proveeNombre' => 'Proveedores',
 		'create equipo' => 'Nuevo equipo',
 		'proveedor_id' => 'Proveedor',

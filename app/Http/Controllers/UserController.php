@@ -41,7 +41,7 @@ class UserController extends Controller
     {
         $readGoogle = new ReadGoogleSheets();
         $readGoogle->GetValuesFromSheets();
-        $numberPermissions = Myhelp::getPermissionToNumber(Myhelp::EscribirEnLog($this, ' Dashboard'));
+        $numberPermissions = MyModels::getPermissionToNumber(Myhelp::EscribirEnLog($this, ' Dashboard'));
         if ($numberPermissions > 1) {
 
             return Inertia::render('Dashboard', [
@@ -59,7 +59,7 @@ class UserController extends Controller
     public function index(UserIndexRequest $request)
     {
         $permissions = Myhelp::EscribirEnLog($this, ' users');
-        $numberPermissions = Myhelp::getPermissionToNumber($permissions);
+        $numberPermissions = MyModels::getPermissionToNumber($permissions);
 
         $users = User::query();
         if ($request->has('search')) {
@@ -239,7 +239,7 @@ class UserController extends Controller
     public function subirexceles()
     { //just  a view
         $permissions = Myhelp::EscribirEnLog($this, ' materia');
-        $numberPermissions = Myhelp::getPermissionToNumber($permissions);
+        $numberPermissions = MyModels::getPermissionToNumber($permissions);
 
         return Inertia::render('User/subirExceles', [
             'breadcrumbs' => [['label' => __('app.label.user'), 'href' => route('user.index')]],

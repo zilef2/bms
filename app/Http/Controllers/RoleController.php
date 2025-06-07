@@ -16,10 +16,10 @@ class RoleController extends Controller
     public function __construct()
     {
 
-        $this->middleware('permission:create role', ['only' => ['create', 'store']]);
-        $this->middleware('permission:read role', ['only' => ['index', 'show']]);
-        $this->middleware('permission:update role', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete role', ['only' => ['destroy', 'destroyBulk']]);
+//        $this->middleware('permission:create role', ['only' => ['create', 'store']]);
+//        $this->middleware('permission:read role', ['only' => ['index', 'show']]);
+//        $this->middleware('permission:update role', ['only' => ['edit', 'update']]);
+//        $this->middleware('permission:delete role', ['only' => ['destroy', 'destroyBulk']]);
     }
     /**
      * Display a listing of the resource.

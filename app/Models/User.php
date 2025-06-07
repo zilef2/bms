@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable,SoftDeletes;
+    use HasFactory, Notifiable,SoftDeletes, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -47,4 +48,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+	
+		public function getCreatedAtAttribute() {
+		return date('d-m-Y H:i', strtotime($this->attributes['created_at']));
+	}
+	
+	public function getUpdatedAtAttribute() {
+		return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
+	}
+	
+	public function getEmailVerifiedAtAttribute() {
+		return $this->attributes['email_verified_at'] == null ? null : date('d-m-Y H:i', strtotime($this->attributes['email_verified_at']));
+	}
+	
+	public function getPermissionArray() {
+		return $this->getAllPermissions()->mapWithKeys(function ($pr) {
+			return [$pr['name'] => true];
+		});
+	}
 }

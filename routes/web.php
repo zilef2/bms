@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ParametrosController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\Settings\ProfileController;
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';
+
+use App\Http\Controllers\{RoleController, ParametrosController, PermissionController};
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -17,14 +17,13 @@ Route::get('dashboard', function () {
 	return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+
 
 Route::middleware('auth', 'verified')->group(function () {
 	//<editor-fold desc="profile - role - permission">
-	Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//	Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//	Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//	Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 	Route::resource('/role', RoleController::class)->except('create', 'show', 'edit');
 	Route::post('/role/destroy-bulk', [RoleController::class, 'destroyBulk'])->name('role.destroy-bulk');
 	Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');

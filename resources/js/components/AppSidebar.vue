@@ -16,6 +16,18 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
+const footerSuperNavItems: NavItem[] = [
+    {
+        title: 'Roles & Permissions',
+        href: '/permission',
+        icon: Folder,
+    },
+    {
+        title: 'Parametros',
+        href: '/Parametros',
+        icon: BookOpen,
+    },
+];
 const footerNavItems: NavItem[] = [
     {
         title: 'Github Repo',
@@ -49,8 +61,10 @@ const footerNavItems: NavItem[] = [
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
-            <NavUser />
+            <NavFooter :items="footerSuperNavItems" />
+        </SidebarFooter>
+        <SidebarFooter>
+            <NavFooter :items="footerNavItems" /><NavUser />
         </SidebarFooter>
     </Sidebar>
     <slot />

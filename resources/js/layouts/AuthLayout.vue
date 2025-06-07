@@ -8,7 +8,10 @@ defineProps<{
 </script>
 
 <template>
-    <AuthLayout :title="lang().label.title" :description="lang().label.description">
+    <AuthLayout
+        :title="lang().t('app.initial.title', 'Título por defecto')"
+        :description="lang().t('app.initial.Log_in_to_your_account', 'Descripción por defecto')"
+    >
         <slot />
     </AuthLayout>
 </template>

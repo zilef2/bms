@@ -27,6 +27,8 @@ class CopyUserPages extends Command {
 	//notacion de notas:
 	// //todo:
 	//very usefull
+	//heyRemember:
+	// nexttochange:
 	// todo: sync: añadir a los demas repos
 	// justtesting: cuando hay que qutiar cosas que solo deberian aparecer en la version de pruebas
 	//thisisnew!!!
