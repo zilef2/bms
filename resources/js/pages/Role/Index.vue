@@ -1,23 +1,22 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+<script setup lang="ts">
+// import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
 import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InfoButton from '@/Components/InfoButton.vue';
-import SelectInput from '@/Components/SelectInput.vue';
 import { reactive, watch } from 'vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import pkg from 'lodash';
 import { router } from '@inertiajs/vue3';
 import Pagination from '@/Components/Pagination.vue';
 import { ChevronUpDownIcon, PencilIcon, TrashIcon } from '@heroicons/vue/24/solid';
-import Create from '@/Pages/Role/Create.vue';
-import Edit from '@/Pages/Role/Edit.vue';
-import Delete from '@/Pages/Role/Delete.vue';
-import DeleteBulk from '@/Pages/Role/DeleteBulk.vue';
-import Checkbox from '@/Components/Checkbox.vue';
-import Permission from '@/Pages/Role/Permission.vue';
+import Create from '@/pages/Role/Create.vue';
+import Edit from '@/pages/Role/Edit.vue';
+import Delete from '@/pages/Role/Delete.vue';
+import DeleteBulk from '@/pages/Role/DeleteBulk.vue';
+// import Checkbox from '@/Components/Checkbox.vue';
+import Permission from '@/pages/Role/Permission.vue';
 import { usePage } from '@inertiajs/vue3';
 
 const { _, debounce, pickBy } = pkg
@@ -53,7 +52,7 @@ const order = (field) => {
 }
 
 watch(() => _.cloneDeep(data.params), debounce(() => {
-    let params = pickBy(data.params)
+    const params = pickBy(data.params)
     router.get(route("role.index"), params, {
         replace: true,
         preserveState: true,
@@ -61,11 +60,11 @@ watch(() => _.cloneDeep(data.params), debounce(() => {
     })
 }, 150))
 
-const selectAll = (event) => {
+const selectAll = (event:any) => {
     if (event.target.checked === false) {
         data.selectedId = []
     } else {
-        props.roles?.data.forEach((role) => {
+        props.roles?.data.forEach((role:object) => {
             data.selectedId.push(role.id)
         })
     }
@@ -83,7 +82,7 @@ const select = () => {
 <template>
     <Head :title="props.title" />
 
-    <AuthenticatedLayout>
+<!--    <AuthenticatedLayout>-->
         <Breadcrumb :title="title" :breadcrumbs="breadcrumbs" />
         <div class="space-y-4">
             <div class="px-4 sm:px-0">
@@ -204,5 +203,5 @@ const select = () => {
                 </div>
             </div>
         </div>
-    </AuthenticatedLayout>
+<!--    </AuthenticatedLayout>-->
 </template>

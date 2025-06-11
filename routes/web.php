@@ -3,7 +3,7 @@
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';
 
-use App\Http\Controllers\{RoleController, ParametrosController, PermissionController};
+use App\Http\Controllers\{PruebasController, RoleController, ParametrosController, PermissionController};
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +12,9 @@ use Inertia\Inertia;
 Route::get('/', function () {
 	return Inertia::render('Welcome');
 })->name('home');
+
+
+Route::get('/rama', [PruebasController::class, 'index'])->name('rama');
 
 Route::get('dashboard', function () {
 	return Inertia::render('Dashboard');

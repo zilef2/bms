@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import Breadcrumb from '@/Components/Breadcrumb.vue';
@@ -11,10 +11,10 @@ import DangerButton from '@/Components/DangerButton.vue';
 import pkg from 'lodash';
 import Pagination from '@/Components/Pagination.vue';
 import { CheckBadgeIcon, ChevronUpDownIcon, PencilIcon, TrashIcon, UserCircleIcon } from '@heroicons/vue/24/solid';
-import Create from '@/Pages/User/Create.vue';
-import Edit from '@/Pages/User/Edit.vue';
-import Delete from '@/Pages/User/Delete.vue';
-import DeleteBulk from '@/Pages/User/DeleteBulk.vue';
+import Create from '@/pages/User/Create.vue';
+import Edit from '@/pages/User/Edit.vue';
+import Delete from '@/pages/User/Delete.vue';
+import DeleteBulk from '@/pages/User/DeleteBulk.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import { router, usePage, useForm, Link } from '@inertiajs/vue3';
 

@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import DangerButton from '@/Components/DangerButton.vue';
 import Modal from '@/Components/Modal.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';

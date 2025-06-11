@@ -17,7 +17,8 @@
         "spatie/laravel-permission": "^6.19",
         "tightenco/ziggy": "^2.4",
         "webklex/laravel-imap": "^6.2",
-        "ext-zip": "*"
+        "ext-zip": "*",
+      "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -88,7 +88,7 @@ const submit = () => {
                     </div>
 
                     <div class="flex items-center gap-4">
-                        <Button :disabled="form.processing">Save</Button>
+                        <Button :disabled="form.processing">Guardar</Button>
 
                         <Transition
                             enter-active-class="transition ease-in-out"
@@ -96,13 +96,13 @@ const submit = () => {
                             leave-active-class="transition ease-in-out"
                             leave-to-class="opacity-0"
                         >
-                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Saved.</p>
+                            <p v-show="form.recentlySuccessful" class="text-sm text-neutral-600">Guardado.</p>
                         </Transition>
                     </div>
                 </form>
             </div>
 
-            <DeleteUser />
+<!--            <DeleteUser />-->
         </SettingsLayout>
     </AppLayout>
 </template>

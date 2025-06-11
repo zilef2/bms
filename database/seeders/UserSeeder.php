@@ -19,17 +19,18 @@ class UserSeeder extends Seeder {
 		$genPa = $this->validarEnv();
 		
 		$superadmin = User::create([
-			                           'name'              => 'Superadmin',
-			                           'email'             => 'superadminmodnom@superadmin.com',
-			                           'password'          => bcrypt($genPa . 'superadmin00.+-*' . $genPa),
-			                           'email_verified_at' => date('Y-m-d H:i'),
-			                           //		                            'cedula'            => '11232454',
-			                           //		                            'cargo_id'          => 2
-		                           ]);
+               'name'              => 'Superadmin',
+               'email'             => 'superadminmodnom@superadmin.com',
+               'password'          => bcrypt($genPa . 'superadmin00.+-*' . $genPa),
+               //1423superadmin00.+-*1423
+               'email_verified_at' => date('Y-m-d H:i'),
+               //		                            'cedula'            => '11232454',
+               //		                            'cargo_id'          => 2
+           ]);
 		$superadmin->assignRole('superadmin');
 		
 		$nombresGenericos = [
-			'Ashly_maria'  => '777117711',
+			'maria'        => '777117711',
 			'Alejandro222' => '1234567890',
 			'Dispercion'   => '1052566569',
 		];
@@ -40,7 +41,7 @@ class UserSeeder extends Seeder {
 			foreach ($nombresGenericos as $key => $value) {
 				$yearRandom = (rand(5, 49));
 				$nombresRandom = (rand(1, count($rolesUser)));
-				$anios = Carbon::now()->subYears($yearRandom)->format('Y-m-d H:i');
+//				$anios = Carbon::now()->subYears($yearRandom)->format('Y-m-d H:i');
 				$unUsuario = User::create([
 					                          'name'              => substr($key, $nombresRandom) . ' el ' . $rol,
 					                          'email'             => $key . '@' . $rol . $key . '.com',
