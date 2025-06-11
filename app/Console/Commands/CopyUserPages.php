@@ -32,7 +32,26 @@ class CopyUserPages extends Command {
 	// todo: sync: añadir a los demas repos
 	// justtesting: cuando hay que qutiar cosas que solo deberian aparecer en la version de pruebas
 	//thisisnew!!!
-	
+	protected function aagenerateAttributes(): array {
+		//string text number dinero date datetime boolean foreign json
+		return [
+			'llave_proceso'          => 'number',
+			'id_proceso'             => 'number',
+			'id_conexion'            => 'text',
+			'fecha_proceso'          => 'datetime',
+			'fecha_ultima_actuacion' => 'datetime',
+			'despacho'               => 'string',
+			'departamento'           => 'string',
+			'sujetos_procesales'     => 'text',
+			'es_privado'             => 'string',
+			'cant_filas'             => 'number',
+			'validacioncini'         => 'bool',
+			'pdf_name'               => 'string',
+			'pdf_size'               => 'string',
+			'pdf_sumarized'          => 'string',
+			'pdf_path'               => 'string',
+		];
+	}
 	public function handle(): int {
 		try {
 			$this->generando = self::getMessage('generando');
@@ -48,18 +67,15 @@ class CopyUserPages extends Command {
 				return 0;
 			}
 			
-			$progressBar = $this->output->createProgressBar(5);
+			$progressBar = $this->output->createProgressBar(2);
 			$progressBar->start();
 			
 			$this->MetodologiaInicial($modelName, 'generic', '');
-			$progressBar->advance();
 			$this->AddAttributesVue($modelName);
-			$progressBar->advance();
 			$this->Paso2($modelName, $submetodo);
 			$progressBar->advance();
 			
 			$this->info(Artisan::call('optimize'));
-			$progressBar->advance();
 			$this->info(Artisan::call('optimize:clear'));
 			$progressBar->advance();
 			$progressBar->finish();
@@ -270,23 +286,7 @@ class CopyUserPages extends Command {
 		return 1;
 	}
 	
-	protected function aagenerateAttributes(): array {
-		// text //string // number // dinero // date // datetime // foreign
-		return [
-			'llave_proceso'          => 'text',
-			'id_proceso'             => 'text',
-			'id_conexion'            => 'text',
-			'fecha_proceso'          => 'text',
-			'fecha_ultima_actuacion' => 'text',
-			'despacho'               => 'text',
-			'departamento'           => 'text',
-			'sujetos_procesales'     => 'text',
-			'es_privado'             => 'text',
-			'cant_filas'             => 'text',
-			'validacioncini'         => 'bool',
-			'pdf_path'               => 'text',
-		];
-	}
+	
 	
 	private function Paso2($modelName, &$submetodo): int {
 		//estos metodos para abajo tienen validacion
@@ -306,11 +306,11 @@ class CopyUserPages extends Command {
 			return 0;
 		}
 		
-		if ($this->DoSideBar($modelName)) {
-			
-			$this->info('DoSideBar' . self::MSJ_EXITO);
-			$this->contadorMetodos ++;
-		}
+//		if ($this->DoSideBar($modelName)) {
+//			
+//			$this->info('DoSideBar' . self::MSJ_EXITO);
+//			$this->contadorMetodos ++;
+//		}
 		else {
 			$this->error('DoSideBar ' . self::MSJ_FALLO);
 			
@@ -527,6 +527,9 @@ class CopyUserPages extends Command {
 	}
 	
 	protected function updateMigration($modelName): int {
+		$atributos = $this->generateAttributes();
+		$migrationFile = collect(glob(database_path('migrations/*.php')))->first(fn($file) => str_contains($file, 'create_' . Str::snake(Str::plural($modelName)) . '_table'))
+		;
 		$atributos = $this->aagenerateAttributes();
 		$migrationFile = collect(glob(database_path('migrations/*.php')))->first(fn($file) => str_contains($file, 'create_' . Str::snake(Str::plural($modelName)) . '_table'));
 		
@@ -538,15 +541,22 @@ class CopyUserPages extends Command {
 		}
 		
 		$columns = collect($atributos)->map(function ($type, $name) {
+			if ($type === 'dinero') {
+				return "\$table->decimal('$name', 62, 2)->default(0);"; 
+			}
+			if ($type === 'dateTime') {
+				return "\$table->dateTime('$name')->default(now());"; 
+			}
+			if ($type === 'boolean') {
+				return "\$table->boolean('$name')->default(false);"; 
+			}
+			
 			if ($type === 'number') {
 				$type = 'integer';
 			}
-			if ($type === 'dinero') {
-				$type = 'decimal';
-			}
 			
 			
-			return "\$table->$type('$name');";
+			return "\$table->$type('$name')->nullable();";
 		})->implode("\n            ");
 		
 		$content = file_get_contents($migrationFile);

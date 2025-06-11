@@ -72,7 +72,7 @@ const onFocusOrVisible = () => handleClipboardRead();
 // <!--</editor-fold>-->
 
 
-watch(() => data.params.search, debounce((newSearch, oldSearch) => {
+watch(() => data.params.search, debounce((newSearch:any, oldSearch:any) => {
     if (newSearch === oldSearch) {
       // No ha cambiado, no hacer nada
       return;

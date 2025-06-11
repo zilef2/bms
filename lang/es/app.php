@@ -51,7 +51,23 @@ return [
 		'empresa' => 'Empresa',
 		'ciudad' => 'Ciudad',
 		'proyecto' => 'Proyecto',
-		//aquipues
+		'proceso' => 'Proceso',
+		'Proceso' => 'Proceso',
+		'llave_proceso' => 'llave_proceso',
+		'id_proceso' => 'id_proceso',
+		'id_conexion' => 'id_conexion',
+		'fecha_proceso' => 'fecha_proceso',
+		'fecha_ultima_actuacion' => 'fecha_ultima_actuacion',
+		'despacho' => 'despacho',
+		'departamento' => 'departamento',
+		'sujetos_procesales' => 'sujetos_procesales',
+		'es_privado' => 'es_privado',
+		'cant_filas' => 'cant_filas',
+		'validacioncini' => 'validacioncini',
+		'pdf_name' => 'pdf_name',
+		'pdf_size' => 'pdf_size',
+		'pdf_sumarized' => 'pdf_sumarized',
+		'pdf_path' => 'pdf_path',
         //actividad
         'Tiempo Transcurrido (mins)' => 'Tiempo Transcurrido (mins)',
         'tipo' => 'Tipo',
@@ -82,28 +98,6 @@ return [
         //parametros
         'parametros' => 'parametros',
 
-
-        //reporte
-        'Tiempo Transcurrido' => 'Tiempo Transcurrido',
-        'tiempo_transcurrido' => 'Tiempo Transcurrido',
-        'TiempoTranscurrido' => 'Tiempo Transcurrido',
-        'delete_confirm_quantity' => 'Por seguridad e integridad, no esta permitido borrar tantos reportes al tiempo',
-        'finLaboral' => 'Finalización jornada laboral',
-        'cantidad (pieza)' => 'Cantidad (pieza)',
-        'TiempoEstimado' => 'Tiempo Estimado',
-        'codigo' => 'Codigo',
-        'fecha' => 'Fecha',
-        'hora inicial' => 'Hora inicial',
-        'hora final' => 'Hora final',
-        'actividad' => 'Actividad',
-        'centrotrabajo' => 'Centro de trabajo',
-        'disponibilidad' => 'Disponibilidad',
-        'material' => 'Material',
-        'operario' => 'Operario',
-        'ordentrabajo' => 'Orden de trabajo',
-        'calendario' => 'Calendario',
-        'pieza' => 'Pieza',
-        'reproceso' => 'Reproceso',
 
         //user
         'RequiredFields' => 'Los campos con * son obligatorios',
@@ -204,6 +198,8 @@ return [
         'check_all' => 'Check all',
         'email_verification' => 'Email Verification',
         'password_forgot' => 'Forgotten password?',
+		//aquipues
+	    
     ],
     'button' => [
 
@@ -372,6 +368,23 @@ return [
 		'empresa' => 'empresa',
 		'ciudad' => 'ciudad',
 		'proyecto' => 'proyecto',
+		'proceso' => 'Proceso',
+		'Proceso' => 'Proceso',
+		'llave_proceso' => 'llave_proceso',
+		'id_proceso' => 'id_proceso',
+		'id_conexion' => 'id_conexion',
+		'fecha_proceso' => 'fecha_proceso',
+		'fecha_ultima_actuacion' => 'fecha_ultima_actuacion',
+		'despacho' => 'despacho',
+		'departamento' => 'departamento',
+		'sujetos_procesales' => 'sujetos_procesales',
+		'es_privado' => 'es_privado',
+		'cant_filas' => 'cant_filas',
+		'validacioncini' => 'validacioncini',
+		'pdf_name' => 'pdf_name',
+		'pdf_size' => 'pdf_size',
+		'pdf_sumarized' => 'pdf_sumarized',
+		'pdf_path' => 'pdf_path',
 		//aquipues
     ],
 ];

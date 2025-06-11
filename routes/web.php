@@ -37,6 +37,7 @@ Route::middleware('auth', 'verified')->group(function () {
 	//<editor-fold desc="User">
 	Route::resource('/user', UserController::class)->except('create', 'show', 'edit');
 	Route::get('/IndexTrashed', [UserController::class, 'IndexTrashed'])->name('IndexTrashed');
+	Route::resource("/Proceso", \App\Http\Controllers\ProcesoController::class);
 	//aquipues
 }); //fin verified
 
