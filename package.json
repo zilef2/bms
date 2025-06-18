@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
+        "@types/lodash": "^4.17.18",
         "@types/node": "^22.13.5",
         "@types/vue-select": "^3.16.8",
         "@vue/eslint-config-typescript": "^14.3.0",

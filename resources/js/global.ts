@@ -37,10 +37,10 @@
 
 //fin FROM others prjects
 // this Project
-export function LookForValueInArray(arrayOfObjects: Object[], searchValue): String {
+export function LookForValueInArray(arrayOfObjects: object[], searchValue : any): string {
     //ex: { title: '123', value: 1 },
-    let foundObject = '';
-    for (const obj of arrayOfObjects) {
+    let foundObject:string = '';
+    for (const obj of arrayOfObjects as any) {
 
         if (typeof searchValue == 'string') {
             // if (obj['title'] === searchValue) {
@@ -95,26 +95,26 @@ export function weekNumber(date: Date): number {
 }
 
 
-export function weekNumberv2(date) {//todo: quiero saber porque el 14 enero de 2025 era la semana 2 !absurdo¡
+export function weekNumberv2(date : any) {//todo: quiero saber porque el 14 enero de 2025 era la semana 2 !absurdo¡
     if (!(date instanceof Date) || isNaN(date.getTime())) {
         return 0
     }
     // Clonar la fecha para no modificar el objeto original
-    var clonedDate: Date = new Date(date.getTime());
+    const clonedDate: Date = new Date(date.getTime());
 
     // Configurar el tiempo al inicio del día para evitar problemas con las zonas horarias
     clonedDate.setHours(0, 0, 0, 0);
 
     // Obtener la fecha de inicio del año
-    var startOfYear: Date = new Date(clonedDate.getFullYear(), 0, 1);
+    const startOfYear: Date = new Date(clonedDate.getFullYear(), 0, 1);
 
     // Calcular la diferencia en milisegundos entre la fecha dada y el inicio del año
-    var timeDiff: any;
+    let timeDiff: any;
     // @ts-ignore
     timeDiff = clonedDate - startOfYear;
 
     // Calcular el número de semanas completas y redondear hacia abajo
-    var weekNumber = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000));
+    let weekNumber = Math.floor(timeDiff / (7 * 24 * 60 * 60 * 1000));
 
     // Agregar 1 para contar la primera semana del año
     weekNumber += 1;
@@ -122,7 +122,7 @@ export function weekNumberv2(date) {//todo: quiero saber porque el 14 enero de 2
     return weekNumber;
 }
 
-export function formatToVue(date): String {
+export function formatToVue(date): string {
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -130,29 +130,29 @@ export function formatToVue(date): String {
     return `${day}/${month}/${year}`;
 }
 
-export function Date_to_html(date: Date): String {
+export function Date_to_html(date: Date): string {
     if (!(date instanceof Date) || isNaN(date.getTime())) {
         return ''
     }
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    let day2: string = day < 10 ? '0' + day : day + '';
+    const day2: string = day < 10 ? '0' + day : day + '';
 
-    let month2: string = month < 10 ? '0' + month : month + '';
+    const month2: string = month < 10 ? '0' + month : month + '';
 
     return `${year}-${month2}-${day2}`;
 }
-export function DateTime_to_html(StringDate): string {
+export function DateTime_to_html(StringDate : any): string {
     if (!StringDate) {
         return '';
     }
-    let date = new Date(StringDate)
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const date : Date = new Date(StringDate)
+    const day : number = date.getDate();
+    const month : number = date.getMonth() + 1;
+    const year : number = date.getFullYear();
+    const hours : number = date.getHours();
+    const minutes : number = date.getMinutes();
     
     // Formatear con ceros a la izquierda cuando sea necesario
     const day2 = day < 10 ? '0' + day : day.toString();
@@ -225,7 +225,7 @@ export function TransformTdate(number: any = null, dateString = new Date()) {
 }
 
 
-export function monthName(monthNumber) {
+export function monthName(monthNumber)   {
     if (monthNumber == 1) return 'Enero';
     if (monthNumber == 2) return 'Febrero';
     if (monthNumber == 3) return 'Marzo';
@@ -341,11 +341,11 @@ export function number_format(amount: any, decimals: number = 0, isPesos = false
     // Convertir a string y asegurarse de que el signo negativo no se elimine
     amount = amount.toString().replace(/[^0-9\.-]/g, '');
 
-    let num: number = parseFloat(amount);
+    const num: number = parseFloat(amount);
     if (isNaN(num)) return (0).toFixed(decimals);
 
     // Formatear el número con la cantidad de decimales deseada
-    let num2 = num.toFixed(decimals);
+    const num2 = num.toFixed(decimals);
 
     let [integerPart, decimalPart] = num2.split('.');
 
@@ -353,7 +353,7 @@ export function number_format(amount: any, decimals: number = 0, isPesos = false
     integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
     // Construir el resultado final
-    let formattedNumber = decimalPart ? `${integerPart},${decimalPart}` : integerPart;
+    const formattedNumber = decimalPart ? `${integerPart},${decimalPart}` : integerPart;
     return isPesos ? `$${formattedNumber}` : formattedNumber;
 }
 
@@ -371,9 +371,9 @@ export function CalcularSexo(value) {
 
 //STRING FUNCTIONS
 export function sinTildes(value) {
-    let pattern = /[^a-zA-Z0-9\s]/g;
-    let replacement = '';
-    let result = value.replace(pattern, replacement);
+    const pattern = /[^a-zA-Z0-9\s]/g;
+    const replacement = '';
+    const result = value.replace(pattern, replacement);
     return result
 }
 

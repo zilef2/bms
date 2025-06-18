@@ -92,7 +92,7 @@ const select = () => data.multipleSelect = props.fromController?.data.length ===
 // text - string // number // dinero // date // datetime // foreign
 const titulos = [
     { order: 'llave_proceso', label: 'llave_proceso', type: 'number' },
-    { order: 'id_proceso', label: 'id_proceso', type: 'number' },
+    { order: 'idProceso', label: 'idProceso', type: 'number' },
     { order: 'id_conexion', label: 'id_conexion', type: 'text' },
     { order: 'fecha_proceso', label: 'fecha_proceso', type: 'datetime' },
     { order: 'fecha_ultima_actuacion', label: 'fecha_ultima_actuacion', type: 'datetime' },

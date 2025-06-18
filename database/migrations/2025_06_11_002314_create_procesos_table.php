@@ -12,7 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('procesos', function (Blueprint $table) {
-            $table->id();
+            $table->string('llave_proceso',30)->nullable();
+            $table->string('idProceso',128)->nullable();
+            $table->text('id_conexion')->nullable();
+            $table->dateTime('fecha_proceso')->default(now())->nullable();
+            $table->dateTime('fecha_ultima_actuacion')->default(now())->nullable();
+            $table->string('despacho')->nullable();
+            $table->string('departamento')->nullable();
+            $table->text('sujetos_procesales')->nullable();
+            $table->string('es_privado')->nullable();
+            $table->integer('cant_filas')->nullable();
+            $table->integer('Numprocesos')->nullable();
+            $table->boolean('validacioncini')->default(false)->nullable();
+            $table->string('pdf_name')->nullable();
+            $table->string('pdf_size')->nullable();
+            $table->string('pdf_sumarized')->nullable();
+            $table->string('pdf_path')->nullable();
             $table->timestamps();
         });
     }

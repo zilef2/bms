@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
+import DataExplicada from '@/pages/DataExplicada.vue';
+import DetalleProceso from '@/pages/DetalleProceso.vue';
+import DetalleActuacion from '@/pages/DetalleActuacion.vue';
 import { type BreadcrumbItem } from '@/types';
-import { onBeforeUnmount, onMounted, reactive, watch } from 'vue';
-// import {computed, onMounted, reactive, ref, watch} from 'vue';
-import { formatearFecha } from '@/global';
+import { Head } from '@inertiajs/vue3';
 import pkg from 'lodash';
-// import PlaceholderPattern from '../components/PlaceholderPattern.vue';
-import {Head, router} from '@inertiajs/vue3';
+import { PropType, onBeforeUnmount, onMounted, reactive, watch } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const { debounce, pickBy } = pkg;
 
@@ -17,21 +18,61 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
+// Define la interfaz para la estructura del objeto 'proceso'
+interface ProcesoDetalle {
+    validacioncini?: boolean; // Ajusta el tipo si no es boolean (ej. string '1'/'0')
+    esPrivado?: string; // Asumo que es '1' o '0' como string
+    sujetosProcesales?: string;
+    llaveProceso?: string;
+    fechaProceso?: string;
+    fechaUltimaActuacion?: string;
+    despacho?: string;
+    departamento?: string;
+}
+
+interface ProcesoDataType {
+    idRegProceso: number;
+    llaveProceso: string;
+    idConexion: number;
+    esPrivado: boolean;
+    fechaProceso: string;
+    codDespachoCompleto: string;
+    despacho: string;
+    ponente: string;
+    tipoProceso: string;
+    claseProceso: string;
+    subclaseProceso: string;
+    recurso: string;
+    ubicacion: string | null;
+    contenidoRadicacion: string | null;
+    fechaConsulta: string;
+    ultimaActualizacion: string;
+}
+
 const props = defineProps({
     title: String,
     Numprocesos: Number,
+    UltimaActuacion: String,
     filters: Object,
+    // ¡Aquí está el cambio clave!
     proceso: {
-        type: Array,
-        // eslint-disable-next-line vue/require-valid-default-prop
-        default: [],
+        type: Object as PropType<ProcesoDetalle | null>, // Indicas que es un Objeto o null
+        default: null, // El valor por defecto es null, no un array vacío
+    },
+    obtenerDetalleProceso: {
+        type: Object as PropType<ProcesoDataType | null>, // Indicas que es un Objeto o null
+        default: null, // El valor por defecto es null, no un array vacío
+    },
+    Actuaciones: {
+        type: Object as PropType<ProcesoDataType | null>, // Indicas que es un Objeto o null
+        default: null, // El valor por defecto es null, no un array vacío
     },
 });
+
 const data = reactive({
     params: {
         search: props.filters?.search,
     },
-    sujetos: Array,
 });
 
 // <!--<editor-fold desc="mounted handleclipboard">-->
@@ -55,7 +96,7 @@ const handleClipboardRead = async () => {
             console.warn('🚫 Portapapeles vacío o no accesible');
             return;
         }
-        const isnumericou = parseInt(clip).isInteger()
+        const isnumericou = Number.isInteger(parseInt(clip));
         if (clip && clip.length > 0 && isnumericou) {
             data.params.search = clip;
         }
@@ -89,9 +130,6 @@ watch(() => data.params.search, debounce((newSearch:any, oldSearch:any) => {
       replace: true,
       preserveState: true,
       preserveScroll: true,
-        onFinish: () => {
-            data.sujetos = props.proceso?.sujetosProcesales?.split('|');
-        }
     });
   }, 475)
 )
@@ -109,9 +147,7 @@ function esRadicacionValida(value: any): boolean {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="grid auto-rows-min gap-4 md:grid-cols-2">
-                <div
-                    class="border-sidebar-border/70 dark:border-sidebar-border relative mx-2 w-full mt-10 overflow-auto rounded-xl border"
-                >
+                <div class="border-sidebar-border/70 dark:border-sidebar-border relative mx-2 mt-10 w-full overflow-auto rounded-xl border">
                     <input
                         type="text"
                         v-model="data.params.search"
@@ -119,59 +155,61 @@ function esRadicacionValida(value: any): boolean {
                         placeholder="Número de radicación"
                     />
                 </div>
-                <!--                <div class="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">-->
-                <!--                    <PlaceholderPattern />-->
-                <!--                </div>-->
-                <!--                <div class="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">-->
-                <!--                    <PlaceholderPattern />-->
-                <!--                </div>-->
-                <!--                <div class="border-sidebar-border/70 dark:border-sidebar-border relative aspect-video overflow-hidden rounded-xl border">-->
-                <!--                    <PlaceholderPattern />-->
-                <!--                </div>-->
             </div>
             <div class="border-sidebar-border/70 dark:border-sidebar-border relative min-h-[100vh] flex-1 rounded-xl border md:min-h-min">
-                <div class="mx-auto w-full max-w-xl rounded-lg bg-white p-8 shadow-lg dark:bg-black">
-                    <h1 v-if="proceso.validacioncini" class="mb-6 text-center text-2xl font-bold text-gray-800 dark:text-white">
-                        Detalle del Proceso Judicial
+                <div v-if="props.proceso?.validacioncini"
+                    class="xs:max-w-[500px] mx-auto w-full rounded-2xl bg-white p-8 hover:shadow-lg lg:max-w-[700px] 2xl:max-w-[900px] dark:bg-black"
+                >
+                    <h1 class="relative mb-8 overflow-hidden text-center text-4xl font-extrabold text-blue-600 dark:text-blue-400">
+                        Detalles del Proceso Judicial
+                        <span
+                            class="via-opacity-30 animate-shine pointer-events-none absolute top-0 left-0 h-full w-full bg-gradient-to-r from-transparent via-white to-transparent"
+                        ></span>
                     </h1>
                     <div class="space-y-4">
-                        <div class="flex justify-between">
-                            <span class="font-semibold text-gray-600 dark:text-white">Radicación:</span>
-                            <span class="text-gray-900 dark:text-white">{{ props.proceso?.llaveProceso }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="font-semibold text-gray-600 dark:text-white">Fecha de inicio:</span>
-                            <span class="text-gray-900 dark:text-white">{{ formatearFecha(props.proceso.fechaProceso) }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="font-semibold text-gray-600 dark:text-white">Última actuación:</span>
-                            <span class="text-gray-900 dark:text-white">{{ formatearFecha(props.proceso.fechaUltimaActuacion) }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="font-semibold text-gray-600 dark:text-white">Despacho:</span>
-                            <span class="text-right text-gray-900 dark:text-white">{{ props.proceso.despacho }}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="font-semibold text-gray-600 dark:text-white">Departamento:</span>
-                            <span class="text-gray-900 dark:text-white">{{ props.proceso.departamento }}</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="mb-1 font-semibold text-gray-600 dark:text-white">Sujetos Procesales:</span>
-                            <div class="rounded p-2 text-sm leading-relaxed text-gray-800 dark:text-white">
-                                <div v-for="(sujeto, i) in data.sujetos" :key="i" class="bg-gray-50 text-black dark:bg-black dark:text-white">
-                                    • {{ sujeto.trim() }}
-                                </div>
-                            </div>
-                        </div>
-                        <div v-if="proceso.validacioncini" class="flex justify-center">
+                        <DataExplicada v-if="props.proceso" :proceso="props.proceso" />
+
+                        <div v-if="props.proceso?.validacioncini" class="flex justify-center">
                             <span class="font-semibold text-gray-600 dark:text-white">¿Es privado?</span>
                             <span class="text-gray-900 dark:text-white">
-                                {{ props.proceso.esPrivado ? '✅' : '❌' }}
+                                {{ props.proceso?.esPrivado == '1' ? '✅' : '❌' }}
                             </span>
                         </div>
+                        <div v-if="Array.isArray(props.proceso) && props.proceso.length > 1" class="flex justify-center">
+                            Hay mas de un proceso ( {{ props.proceso?.length }} )
+                        </div>
+<!--asdasdasd {{props.Actuaciones}}-->
+                        <DetalleActuacion v-if="props.proceso?.validacioncini && props.Actuaciones" :actuaciones="props.Actuaciones" />
+                        
+                        <DetalleProceso 
+                            v-if="props.proceso?.validacioncini && props.obtenerDetalleProceso" 
+                            :proceso="props.obtenerDetalleProceso" 
+                            :UltimaActuacion="UltimaActuacion"
+                        />
                     </div>
                 </div>
             </div>
         </div>
     </AppLayout>
 </template>
+
+<style scoped>
+/* Define la animación de brillo para Tailwind */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) skewX(-20deg);
+  }
+  50% {
+    transform: translateX(200%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(-100%) skewX(-20deg);
+  }
+}
+
+/* Agrega la animación a Tailwind */
+.animate-shine {
+  animation: shine 3s infinite ease-in-out;
+  animation-delay: 1s;
+}
+</style>

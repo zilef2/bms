@@ -36,7 +36,7 @@ class CopyUserPages extends Command {
 		//string text number dinero date datetime boolean foreign json
 		return [
 			'llave_proceso'          => 'number',
-			'id_proceso'             => 'number',
+			'idProceso'             => 'number',
 			'id_conexion'            => 'text',
 			'fecha_proceso'          => 'datetime',
 			'fecha_ultima_actuacion' => 'datetime',

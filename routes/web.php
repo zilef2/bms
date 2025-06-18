@@ -20,7 +20,16 @@ Route::get('dashboard', function () {
 	return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/actuaciones', function () {
+	$contro = new PruebasController();
+	
+	$urlactuaciones = "https://consultaprocesos.ramajudicial.gov.co:448/api/v2/Proceso/Actuaciones/110010203000202500668000";
+	$llamada = $contro->obtenerAPIProceso($urlactuaciones);
+	dd(
+	    $llamada
+	);
 
+});
 
 Route::middleware('auth', 'verified')->group(function () {
 	//<editor-fold desc="profile - role - permission">

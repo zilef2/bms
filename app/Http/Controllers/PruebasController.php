@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use AllowDynamicProperties;
+use App\Models\Proceso;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,6 +15,8 @@ use Inertia\Inertia;
 	}
 	
 	public function index(Request $req) {
+		Carbon::setLocale('es');
+		
 		$Numprocesos = 0;
 		$numero_radicacion = null;
 		$proceso = ['validacioncini' => false];
@@ -27,47 +31,70 @@ use Inertia\Inertia;
 		
 		if ($numero_radicacion) {
 			// Buscar primero en la base de datos
-			$procesoDB = \App\Models\Proceso::where('llave_proceso', $numero_radicacion)->first();
+			$procesoDB = Proceso::where('llave_proceso', $numero_radicacion)->first();
 			
-			if ($procesoDB) {
-				// Encontrado en la BD, usarlo
-				$proceso = $procesoDB->toArray();
+			//			if ($procesoDB) {
+			//				// Encontrado en la BD, usarlo
+			//				$proceso = $procesoDB->toArray();
+			//				$proceso = $this->traduccionBackFront($proceso);
+			//				//				dd($proceso);
+			//				$Numprocesos = 1; // O puedes guardar en la BD el número real si lo necesitas
+			//				
+			//				$urlDetalle = "https://consultaprocesos.ramajudicial.gov.co:448/api/v2/Proceso/Detalle/{$proceso['idProceso']}";
+			//				$urlactuaciones = "https://consultaprocesos.ramajudicial.gov.co:448/api/v2/Proceso/Actuaciones/{$proceso['idProceso']}";
+			//				
+			//				$Detalle = $this->obtenerAPIProceso($proceso['idProceso'],$urlDetalle);
+			//				$Actuaciones = $this->obtenerAPIProceso($proceso['idProceso'],$urlactuaciones);
+			//			}
+			//			else {
+			// No está en la BD, buscar en la API externa
+			$data = $this->GetJsonRama($numero_radicacion);
+			
+			if (isset($data['procesos']) && is_array($data['procesos']) && count($data['procesos']) > 0) {
+				$Numprocesos = count($data['procesos']);
+				$proceso = $data['procesos'][0];
+				
+				$urlDetalle = "https://consultaprocesos.ramajudicial.gov.co:448/api/v2/Proceso/Detalle/{$proceso['idProceso']}";
+				$urlactuaciones = "https://consultaprocesos.ramajudicial.gov.co:448/api/v2/Proceso/Actuaciones/{$proceso['idProceso']}";
+				$Detalle = $this->obtenerAPIProceso($proceso['idProceso'], $urlDetalle);
+				$Actuaciones = $this->obtenerAPIProceso($proceso['idProceso'], $urlactuaciones);
+				$UltimaActuacion = $Detalle['ultimaActualizacion'] ? Carbon::parse($Detalle['ultimaActualizacion'])->diffForHumans() : null;
 				$proceso['validacioncini'] = true;
-				$Numprocesos = 1; // O puedes guardar en la BD el número real si lo necesitas
+				// Guardar en la BD para futuras consultas
+				Proceso::create([
+					                'llave_proceso'          => $proceso['llaveProceso'] ?? $numero_radicacion,
+					                'idProceso'              => $proceso['idProceso'] ?? null,
+					                'id_conexion'            => $proceso['idConexion'] ?? null,
+					                'fecha_proceso'          => isset($proceso['fechaProceso']) ? substr($proceso['fechaProceso'], 0, 10) : null,
+					                'fecha_ultima_actuacion' => isset($proceso['fechaUltimaActuacion']) ? substr($proceso['fechaUltimaActuacion'], 0, 10) : null,
+					                'despacho'               => $proceso['despacho'] ?? null,
+					                'departamento'           => $proceso['departamento'] ?? null,
+					                'sujetos_procesales'     => $proceso['sujetosProcesales'] ?? null,
+					                'es_privado'             => $proceso['esPrivado'] ?? false,
+					                'cant_filas'             => $proceso['cantFilas'] ?? null,
+					                'validacioncini'         => true,
+					                'pdf_path'               => null,
+					                'Numprocesos'            => $Numprocesos,
+					                'UltimaActuacion'        => $UltimaActuacion,
+				                ]);
 			}
 			else {
-				// No está en la BD, buscar en la API externa
-				$data = $this->GetJsonRama($numero_radicacion);
-				
-				if (isset($data['procesos']) && is_array($data['procesos']) && count($data['procesos']) > 0) {
-					$Numprocesos = count($data['procesos']);
-					$proceso = $data['procesos'][0];
-					$proceso['validacioncini'] = true;
-					// Guardar en la BD para futuras consultas
-					\App\Models\Proceso::create([
-						                            'llave_proceso'          => $proceso['llaveProceso'] ?? $numero_radicacion,
-						                            'id_proceso'             => $proceso['idProceso'] ?? null,
-						                            'id_conexion'            => $proceso['idConexion'] ?? null,
-						                            'fecha_proceso'          => isset($proceso['fechaProceso']) ? substr($proceso['fechaProceso'], 0, 10) : null,
-						                            'fecha_ultima_actuacion' => isset($proceso['fechaUltimaActuacion']) ? substr($proceso['fechaUltimaActuacion'], 0, 10) : null,
-						                            'despacho'               => $proceso['despacho'] ?? null,
-						                            'departamento'           => $proceso['departamento'] ?? null,
-						                            'sujetos_procesales'     => $proceso['sujetosProcesales'] ?? null,
-						                            'es_privado'             => $proceso['esPrivado'] ?? false,
-						                            'cant_filas'             => $proceso['cantFilas'] ?? null,
-						                            'validacioncini'         => true,
-						                            // 'pdf_path' => null, // Puedes dejarlo null por ahora
-					                            ]);
-				}
+				$mensajeError = 'No se encontraron procesos para el número de radicación: ' . $numero_radicacion;
 			}
+			
+			//			}
 		}
 		
 		
 		return Inertia::render('rama', [
-			'title'       => $this->titleindex,
-			'Numprocesos' => $Numprocesos,
-			'proceso'     => $proceso,
-			'filters'     => $req->all(['search', 'field']),
+			'title'                 => $this->titleindex,
+			'Numprocesos'           => $Numprocesos,
+			'proceso'               => $proceso,
+			'UltimaActuacion'       => $UltimaActuacion ?? '',
+			'obtenerDetalleProceso' => $Detalle ?? [],
+			'Actuaciones'           => $Actuaciones['actuaciones'] ?? [],
+		'PagActuaciones'            => $Actuaciones['paginacion'] ?? [],
+			'filters'               => $req->all(['search', 'field']),
 		]);
 	}
 	
@@ -94,16 +121,37 @@ use Inertia\Inertia;
 		
 		return $data;
 	}
+	
+	public function obtenerAPIProceso($idProceso, $url) {
+		
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, [
+			'Accept: application/json, text/plain, */*',
+			'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36',
+			'Origin: https://consultaprocesos.ramajudicial.gov.co',
+			'Referer: https://consultaprocesos.ramajudicial.gov.co/',
+		]);
+		
+		$response = curl_exec($ch);
+		curl_close($ch);
+		
+		
+		return json_decode($response, true);
+	}
+	
+	private function traduccionBackFront($proceso) {
+		$proceso['validacioncini'] = true;
+		$proceso['llaveProceso'] = $proceso['llave_proceso'];
+		$proceso['idConexion'] = $proceso['id_conexion'];
+		$proceso['fechaProceso'] = $proceso['fecha_proceso'];
+		$proceso['fechaUltimaActuacion'] = $proceso['fecha_ultima_actuacion'];
+		$proceso['sujetosProcesales'] = $proceso['sujetos_procesales'];
+		$proceso['esPrivado'] = $proceso['es_privado'];
+		$proceso['cantFilas'] = $proceso['cant_filas'];
+		
+		
+		return $proceso;
+	}
+	
 }
-//0 => array:10 [▼
-//    "idProceso" => 146028713
-//    "idConexion" => 392
-//    "llaveProceso" => "11001020300020250066800"
-//    "fechaProceso" => "2025-02-12T00:00:00"
-//    "fechaUltimaActuacion" => "2025-04-09T00:00:00"
-//    "despacho" => "DESPACHO 000 - CORTE SUPREMA DE JUSTICIA - CIVIL - BOGOTÁ *"
-//    "departamento" => "BOGOTÁ"
-//    "sujetosProcesales" => "Demandante: DARWIN MORENO LOZANO | Demandante: AULIO MORENO LOZANO | Dema
-//    "esPrivado" => false
-//    "cantFilas" => -1
-//  ]
